@@ -1,34 +1,19 @@
-;;; definition-lookup-mode.el --- A mode for looking up definitions -*- lexical-binding: t; no-byte-compile: t; -*-
-;; Copyright (C) 2025 john
+;;; definition-mode.el -*- lexical-binding: t; no-byte-compile: t; -*-
+;; File Commentary: For authoring definitions
 ;;
-;; Author: john <https://github.com/jgrey4296>
-;; Created: November 17, 2025
-;; Modified: November 17, 2025
-;; Version: 0.1.0
-;; Keywords:
-;; Homepage: https://github.com/jgrey4296
-;; Package-Requires: ((emacs "30.2"))
-;; Package written on: ((emacs 30.2))
-;;
-;; This file is not part of GNU Emacs.
 ;;
 
-;;; Commentary:
+;;--| imports
 
-;;-- imports
+;;--| keymap
 
-;;-- end imports
-
-;;-- keymap
-
-(defvar-local definition-lookup-mode-map
+(defvar-local definition-mode-map
     (make-sparse-keymap))
 
-;;-- end keymap
 
-;;-- font lock
+;;--| font lock
 
-(defconst definition-lookup-font-lock-keywords
+(defconst definition-font-lock-keywords
     (rx-let ((w (x) (: x (0+ blank)))
                 (g (x) (group x))
                 (ln (: punctuation line-end))
@@ -42,14 +27,12 @@
 
             )
         )
-    "Highlighting for definition-lookup-mode"
+    "Highlighting for definition-mode"
     )
-
-;;-- end font lock
 
 ;;-- syntax
 
-(defvar definition-lookup-mode-syntax-table
+(defvar definition-mode-syntax-table
     (let ((st (make-syntax-table)))
         ;; Symbols
         (modify-syntax-entry ?. "_" st)
@@ -67,44 +50,44 @@
         (modify-syntax-entry ?* "_ 23b" st)
         (modify-syntax-entry ?\n ">" st)
         ;; Strings
-        (modify-syntax-entry ?" """ st)
+        (modify-syntax-entry ?\" "\"" st)
         ;; Pair parens, brackets, braces
-        (modify-syntax-entry ?( "()" st)
+        (modify-syntax-entry ?\( "()" st)
         (modify-syntax-entry ?\[ "(]" st)
         (modify-syntax-entry ?{ "(}" st)
         (modify-syntax-entry ?: ".:2" st)
         st)
-    "Syntax table for the definition-lookup-mode"
+    "Syntax table for the definition-mode"
     )
 
 ;;-- end syntax
 
 ;;-- mode definition
 
-(define-derived-mode definition-lookup-mode fundamental-mode
-    "definition-lookup"
+(define-derived-mode definition-mode fundamental-mode
+    "definition"
     (interactive)
     (kill-all-local-variables)
-    (use-local-map definition-lookup-mode-map)
+    (use-local-map definition-mode-map)
 
     ;; font-lock-defaults: (keywords disable-syntactic case-fold syntax-alist)
-    (set (make-local-variable 'font-lock-defaults) (list definition-lookup-font-lock-keywords nil))
-    ;; (set (make-local-variable 'font-lock-syntactic-face-function) 'definition-lookup-syntactic-face-function)
-    ;; (set (make-local-variable 'indent-line-function) 'definition-lookup-indent-line)
+    (set (make-local-variable 'font-lock-defaults) (list definition-font-lock-keywords nil))
+    ;; (set (make-local-variable 'font-lock-syntactic-face-function) 'definition-syntactic-face-function)
+    ;; (set (make-local-variable 'indent-line-function) 'definition-indent-line)
     (set (make-local-variable 'comment-style) '(plain))
     (set (make-local-variable 'comment-start) "//")
     (set (make-local-variable 'comment-use-syntax) t)
-    (set-syntax-table definition-lookup-mode-syntax-table)
+    (set-syntax-table definition-mode-syntax-table)
     ;;
-    (setq major-mode 'definition-lookup-mode)
-    (setq mode-name "definition-lookup")
+    (setq major-mode 'definition-mode)
+    (setq mode-name "definition")
     (outline-minor-mode)
     (yas-minor-mode)
     (run-mode-hooks)
     )
-(add-to-list 'auto-mode-alist '("\.definition-lookup\'" . definition-lookup-mode))
+(add-to-list 'auto-mode-alist '("\.definition\'" . definition-mode))
 
 ;;-- end mode definition
 
-(provide 'definition-lookup-mode)
-;;; definition-lookup-mode.el ends here
+(provide 'definition-mode)
+;;; definition-mode.el ends here

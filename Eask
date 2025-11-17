@@ -8,6 +8,7 @@
 (keywords )
 
 (package-file "definition-lookup-mode.el")
+(files "definition-mode.el")
 
 (script "test" "echo \"Error: no test specified\" && exit 1")
 
