@@ -7,10 +7,8 @@
 (website-url "https://github.com/jgrey4296/definition-lookup-mode")
 (keywords )
 
-(package-file "definition-lookup-mode.el")
+(package-descriptor "definition-lookup-mode-pkg.el")
 (files "definition-mode.el")
-
-(script "test" "echo \"Error: no test specified\" && exit 1")
 
 (source "gnu")
 (source "melpa")
